@@ -60,8 +60,7 @@ for ind = 2:length(all_wpts.lat)
     pt2.lat = lat_wpts(ind)*pi/180;
     pt2.lon = lon_wpts(ind)*pi/180;
 
-    if all_wpts.leg_type{ind} == 'TF' | all_wpts.leg_type{ind} == 'CF'
-    
+    if all_wpts.leg_type{ind} == 'TF' | all_wpts.leg_type{ind} == 'CF' | all_wpts.leg_type{ind} == 'IF'
         for ii = 1:N
             [lat(end+1), lon(end+1), crs12] = direct(pt1.lat, pt1.lon, all_wpts_out.dist_to_nxt{ind-1}*ii/N, all_wpts_out.crs_to_nxt{ind-1});
         end
