@@ -68,7 +68,15 @@ for ind = 2:length(all_wpts.lat)
         continue
     end
     if all_wpts.leg_type{ind} == 'RF'
-
+        pt3.lat = all_wpts_out.center_lat{ind}*pi/180;
+        pt3.lon = all_wpts_out.center_lon{ind}*pi/180;
+        [radius, crs31, ~] = inverse(pt3.lat, pt3.lon, pt1.lat, pt1.lon);
+        [~, crs32, ~] = inverse(pt3.lat, pt3.lon, pt2.lat, pt2.lon);
+        disp([ind, radius])
+        for ii = 1:N
+            [lat(end+1), lon(end+1), crs12] = direct(pt3.lat, pt3.lon, radius, crs31 + (crs32-crs31) * ii/N);
+        end
+        continue
     end
     disp(all_wpts.leg_type{ind})
 end
