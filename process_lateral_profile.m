@@ -54,13 +54,23 @@ all_wpts_out.dist_to_nxt{ind} = NaN;
 lat = [];
 lon = [];
 
-for ind = 1:length(all_wpts.lat)-1
-    pt1.lat = lat_wpts(ind)*pi/180;
-    pt1.lon = lon_wpts(ind)*pi/180;
+for ind = 2:length(all_wpts.lat)
+    pt1.lat = lat_wpts(ind-1)*pi/180;
+    pt1.lon = lon_wpts(ind-1)*pi/180;
+    pt2.lat = lat_wpts(ind)*pi/180;
+    pt2.lon = lon_wpts(ind)*pi/180;
 
-    for ii = 1:N
-        [lat(end+1), lon(end+1), crs12] = direct(pt1.lat, pt1.lon, all_wpts_out.dist_to_nxt{ind}*ii/N, all_wpts_out.crs_to_nxt{ind});
+    if all_wpts.leg_type{ind} == 'TF' | all_wpts.leg_type{ind} == 'CF'
+    
+        for ii = 1:N
+            [lat(end+1), lon(end+1), crs12] = direct(pt1.lat, pt1.lon, all_wpts_out.dist_to_nxt{ind-1}*ii/N, all_wpts_out.crs_to_nxt{ind-1});
+        end
+        continue
     end
+    if all_wpts.leg_type{ind} == 'RF'
+
+    end
+    disp(all_wpts.leg_type{ind})
 end
 
 lat = rad2deg(lat);
